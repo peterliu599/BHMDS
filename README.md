@@ -9,13 +9,10 @@ URL: https://arxiv.org/abs/2210.15081.
 
 There are four folders in this repository:
 1) "simulation": Contains code for reproducing Figure 1-4, i.e. simulation experiments and calibration evaluation for BHMDS;
-2) "stress & distortion": Contains code for reproducing the stress and distortion evaluation in Table 1 & 2 for data sets
+2) "stress & distortion": Contains code, embedding results, and original data sets for reproducing the stress and distortion evaluation in Table 1 & 2 for data sets
 - Karate club
 - Phylogenetic tree
 - CS phd
 - Wordnet mammal subtree
-
-We provide the original data sets as well as bhmds & bmds embeddings.
-
-3) "log likelihood comparison wordnet": Contains code for reproducing Figure 5, i.e. the log-likelihood comparison between full & case-control approximated MCMC using Wordnet mammal subtree data sets. 
-4) "application": Contain code for reproducing Figure 6 & 7, i.e. the cluster-wise cell type distance and frequency of their rank statistics. 
+3) "log likelihood comparison wordnet": Contains code, embedding results, and original data sets for reproducing Figure 5, i.e. the log-likelihood comparison between full & case-control approximated MCMC using Wordnet mammal subtree data sets. 
+4) "application": Contain code, embedding results, and original data sets for reproducing Figure 6 & 7, i.e. the cluster-wise cell type distance and frequency of their rank statistics. 
