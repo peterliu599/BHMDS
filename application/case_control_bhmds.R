@@ -375,20 +375,6 @@ for (i in 1:n) {
   }
 }
 
-
-# count = 0
-# tempsum = 0
-# for (i in 1:n) {
-#   if (grouplabel[i] == 1) {
-#     for (j in 1:n) {
-#       if (grouplabel[j] == 2) {
-#         tempsum = tempsum + D[i, j]
-#         count = count + 1
-#       }
-#     }
-#   }
-# }
-
 maxiter = 25000
 burnin = 10000
 
@@ -396,115 +382,90 @@ result <- main_bhmds(n, d, D, V0, X0, sigg0, a, alpha, maxiter,
                      constant, beta0, burnin, kappa, nearest, rand_sample, coef, grouplabel)
 
 saveRDS(result, "final_result.RData")
-#  # saveRDS(result, "final_result_10_5.RData")
-# plot(result[[1]], type = "l")
-# Dfit <- result[[1]]
-# sqrt(sum((delta0 - D)^2)) / sqrt(sum(D^2))
-# hydra$stress / sqrt(sum(D^2))
-# # write.csv(Dfit * 10, "final_fit.csv")
-# boxplot(temp_read[[4]])
-# max(result[[4]][,1]) - min(result[[4]][,1])
-# temp_read <- readRDS("final_result_10_5.RData")
-# plot(temp_read[[1]], type = "l")
-# abline(a = median(temp_read[[1]]), b = 0, col = "red")
+
+## Plots
+
+# tracecdist <- matrix(rep(0, 15000 * 105), ncol = 105)
+# for (i in 1:15000) {
+#   file = paste("tracecdist_", i , ".csv", sep = "")
+#   temp = as.matrix(read.csv(file, header = T)[, -1])
+#   tracecdist[i, ] = temp[upper.tri(temp)]
+#   print(i)
+# }
 # 
-# max(result[[4]][,1]) - min(result[[4]][,1])
-# result[[5]]
-# plot(result[[5]])
-# sum(c(467, 377, 566, 831, 262, 388, 567, 166, 112, 288, 167, 104, 672, 334,  71))
-# tempm <- matrix(rep(0, n * 17000), ncol = n)
-# length(which(result[[5]] == 0))
-# unique(grouplabel_temp[which(result[[5]] == 0)])
+# med_tracecdist <- matrix(rep(0, 225), ncol = 15)
+# med_temp <- rep(0, 105)
+# for (i in 1:105) {
+#   # plot(tracecdist[,i], type ="l")
+#   med_temp[i] = median(tracecdist[,i])
+# }
+# med_tracecdist[upper.tri(med_tracecdist)] = med_temp
+# med_tracecdist = med_tracecdist + t(med_tracecdist)
+# colnames(med_tracecdist) = label
+# rownames(med_tracecdist) = label
+# label_3 <- c("blood neoplasm cell line","non leukemic blood neoplasm", "leukemia","normal blood", 
+#              "blood non neoplastic disease","nervous system neoplasm","solid tissue non neoplastic disease",
+#              "normal solid tissue","solid tissue neoplasm cell line", "non neoplastic cell line",
+#              "non breast carcinoma","breast cancer", "germ cell neoplasm","sarcoma", "other neoplasm")
+# temp_med_tracecdist <- med_tracecdist[label_3, label_3]
+# diag(temp_med_tracecdist) = 10
+# df <- melt(temp_med_tracecdist)
+# colnames(df) <- c("Cell Type 1", "Cell Type 2", "Pseudotime")
+# ggplot(df, aes(y = `Cell Type 1`, x = `Cell Type 2`, fill = Pseudotime)) +
+#   geom_tile() + coord_fixed() +  scale_fill_distiller(palette = "OrRd", direction = 1, name ="Cluster distance") +
+#   theme(legend.title = element_text(size=20), legend.text = element_text(size=15),
+#         axis.text=element_text(size=16), axis.title=element_text(size=1)) + 
+#   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))  +
+#   xlab("") + ylab("")
 # 
-# disttt <- result[[4]]
-# hist(disttt[,1])
-# dist_list <- vector(mode = "list", length = 15)
+# tracehdist <- matrix(rep(0, 15000 * n), ncol = n)
+# for (i in 1:15000) {
+#   file = paste("tracehdist_", i , ".csv", sep = "")
+#   temp = read.csv(file, header = T)[, 2]
+#   tracehdist[i, ] = temp
+#   print(i)
+# }
+# 
+# hdist_list <- vector(mode = "list", length = 15)
 # for (i in 1:n) {
-#   dist_list[[grouplabel[i]]] = c(dist_list[[grouplabel[i]]], disttt[,i])
+#   citemp <- ci(tracehdist[,i], method = "ETI")
+#   templab <- which((tracehdist[,i] > citemp$CI_low) & (tracehdist[,i] < citemp$CI_high))
+#   hdist_list[[grouplabel[i]]] <- c(hdist_list[[grouplabel[i]]], tracehdist[templab, i])
 # }
-# par(mfrow=c(3,5))
 # 
+# s = 10000
+# sam <- ord <- matrix(rep(0, 15 * s), ncol = 15)
 # for (i in 1:15) {
-#   hist(dist_list[[i]])
+#   sam[,i] = sample(hdist_list[[i]], s, replace = T)
 # }
-# library(bayestestR)
-# 
-# tempupper <- templower <- rep(0, 15)
-# for (i in 1:15) {
-#   citemp <- ci(dist_list[[i]], method = "ETI")
-#   tempupper[i] = citemp$CI_high
-#   templower[i] = citemp$CI_low
+# for (i in 1:s) {
+#   ord[i,] = order(sam[i,])
 # }
-# final_result <- readRDS("final_result_10_5.RData")
-# colMeans(final_result[[4]])
-# 
-# group_count <- rep(0, 15)
-# for (i in 1:n) {
-#   group_count[grouplabel[i]] = group_count[grouplabel[i]] + 1
-# }
-# aver_count <- rep(0, 15)
-# for (i in 1:15) {
-#   temp <- acosh(X0[,1]) 
-#   aver_count[i] = mean(temp[grouplabel == i])
-# }
-# aver_count - colMeans(final_result[[4]])
-# dat <- data.frame(
-#   label = label,
-#   upper = tempupper,
-#   lower = templower,
-#   mean = as.numeric(colMeans(final_result[[4]]))
-# )
-# library(tidyverse)
-# par(mfrow=c(1,1))
-# pd <- position_dodge(0.78)
-# ggplot(dat, aes(x=label, y = mean, group = label)) +
-#   #draws the means
-#   geom_point(position=pd) +
-#   #draws the CI error bars
-#   geom_errorbar(data=dat, aes(ymin= lower, ymax=upper, 
-#                                 color=label), width=.1, position=pd)
-# 
-# dist_list <- vector(mode = "list", length = 15)
-# 
-# for (i in 1:15) {
-#     temp <- acosh(X0[,1]) 
-#     dist_list[[i]] = temp[grouplabel == i]
-# }
-# 
-# tempupper <- templower <- rep(0, 15)
-# for (i in 1:15) {
-#   citemp <- ci(dist_list[[i]], method = "ETI")
-#   tempupper[i] = citemp$CI_high
-#   templower[i] = citemp$CI_low
-# }
-# 
-# dat <- data.frame(
-#   label = label,
-#   upper = tempupper,
-#   lower = templower,
-#   mean = as.numeric(colMeans(final_result[[4]]))
-# )
-# 
-# library(tidyverse)
-# par(mfrow=c(1,1))
-# pd <- position_dodge(0.78)
-# ggplot(dat, aes(x=label, y = mean, group = label)) +
-#   #draws the means
-#   geom_point(position=pd) +
-#   #draws the CI error bars
-#   geom_errorbar(data=dat, aes(ymin= lower, ymax=upper, 
-#                               color=label), width=.1, position=pd)
-# tempsum = 0
-# count = 0
-# for (i in 1:n) {
-#   if (grouplabel[i] == 1) {
-#     for (j in 1:n) {
-#       if (grouplabel[j] == 2) {
-#         tempsum = tempsum + D[i, j]
-#         count = count + 1
-#       }
-#     }
+# res <- matrix(rep(0, 225), ncol = 15)
+# for (i in 1:15){
+#   tempsam <- ord[,i]
+#   for (j in 1:15) {
+#     res[j, i] = length(which(tempsam == j))
 #   }
 # }
-# tempsum / count
-# sum(D[which(grouplabel == 1), which(grouplabel == 2)]) / (grouplength[1] * grouplength[2])
+# res <- res / 10000
+# rownames(res) <- label
+# colnames(res) <- c("1st", "2nd", "3rd", "4th","5th","6th","7th","8th","9th","10th","11th","12th","13th","14th","15th")
+# label_3 <- c("solid tissue non neoplastic disease", "normal solid tissue","normal blood", "leukemia",
+#              "blood non neoplastic disease", "blood neoplasm cell line",
+#              "nervous system neoplasm", "non neoplastic cell line", 
+#              "solid tissue neoplasm cell line" ,
+#              "sarcoma","non leukemic blood neoplasm", 
+#              "non breast carcinoma", "other neoplasm",
+#              "breast cancer" ,"germ cell neoplasm")
+# res <- res[label_3, ]
+# res <- round(res, 3)
+# df <- melt(res)
+# colnames(df) <- c("Cell Type", "Rank", "value")
+# ggplot(df, aes(y = `Cell Type`, x = Rank, fill = value)) +
+#   geom_tile(color = "white",
+#             lwd = 1.5,
+#             linetype = 1) + scale_fill_distiller(palette = "YlOrRd", direction = 1, name = "Frequency")+
+#   coord_fixed() + geom_text(aes(label = value), color = "black", size = 3.5) +
+#   theme(legend.title = element_text(size=25), legend.text = element_text(size=20),
+#         axis.text=element_text(size = 18), axis.title=element_text(size=25))
