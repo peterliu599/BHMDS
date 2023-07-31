@@ -5,7 +5,7 @@ Shane Lubold, Department of Statistics, University of Washington,
 
 Adrian E. Raftery, Department of Statistics, University of Washington,
 
-Tyler H. McCormick, Department of Statistics, University of Washington.
+and Tyler H. McCormick, Department of Statistics, University of Washington.
 
 This repository contains the code to reproduce the figures in the paper "Bayesian Hyperbolic Multidimensional Scaling".
 
