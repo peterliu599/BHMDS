@@ -1,7 +1,11 @@
 # Bayesian Hyperbolic Multidimensional Scaling (BHMDS)
-By Bolun (Peter) Liu, Department of Biostatistics, Johns Hopkins Bloomberg School of Public Health
+By Bolun (Peter) Liu, Department of Biostatistics, Johns Hopkins Bloomberg School of Public Health,
 
-Shane Lubold, Adrian E. Raftery, Tyler H. McCormick, Department of Statistics, University of Washington
+Shane Lubold, Department of Statistics, University of Washington,
+
+Adrian E. Raftery, Department of Statistics, University of Washington,
+
+Tyler H. McCormick, Department of Statistics, University of Washington.
 
 This repository contains the code to reproduce the figures in the paper "Bayesian Hyperbolic Multidimensional Scaling".
 
