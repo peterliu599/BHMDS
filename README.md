@@ -15,4 +15,6 @@ There are four folders in this repository:
 - CS phd
 - Wordnet mammal subtree
 3) "log likelihood comparison wordnet": Contains code, embedding results, and original data sets for reproducing Figure 5, i.e. the log-likelihood comparison between full & case-control approximated MCMC using Wordnet mammal subtree data sets. 
-4) "application": Contain code, embedding results, and original data sets for reproducing Figure 6 & 7, i.e. the cluster-wise cell type distance and frequency of their rank statistics. 
+4) "application": 
+- network_centrality: Source code & data for Section 6.3. Contain code & original data sets for reproducing Figure 6 & 7, i.e. BHMDS visualization and distances to the origin with uncertainty quantification. 
+- gene_expression: Source code & data for Section 6.4. Contain code, embedding results, and original data sets for reproducing Figure 8 & 9, i.e. the cluster-wise cell type distance and frequency of their rank statistics. 
